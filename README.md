@@ -10,6 +10,11 @@ and a light-pink theme.
 - Built **unsigned** on GitHub Actions (macOS runner) and sideloaded with a free Apple ID.
   No Mac needed on your side.
 
+> **Zero-cost install (recommended):** the same app also exists as a **web app** in `web/`,
+> published free on GitHub Pages. She opens the link in Safari and taps **Share → Add to Home Screen**.
+> No cable, no Apple ID, no 7-day limit. See [Web app](#web-app-zero-cost-no-cable) below.
+> The native iOS project remains for a future TestFlight release.
+
 ```
 project.yml                 XcodeGen spec (bundle id, deployment target, signing)
 NoteReader/
@@ -20,8 +25,33 @@ NoteReader/
   Views/                    Home, Game, StaffView (Canvas), AnswerLetters, PianoKeys, Settings, Stats, Results
   Assets.xcassets           AppIcon (1024 px single-size)
   Info.plist
+web/                        Web app (PWA): index.html, app.js, styles.css, sw.js, manifest, icons
 .github/workflows/build.yml CI: xcodegen → xcodebuild archive → NoteReader.ipa
+.github/workflows/pages.yml CI: publish web/ to GitHub Pages
 ```
+
+---
+
+## Web app (zero cost, no cable)
+
+**Link:** <https://thelowke-cloud.github.io/Marty/>
+
+Every push that touches `web/` redeploys it automatically (workflow **Deploy web app**).
+The first deploy needs GitHub Pages enabled once: the workflow tries to enable it itself; if it
+fails with a permissions error, open **Settings → Pages → Build and deployment → Source** and
+choose **GitHub Actions**, then re-run the workflow.
+
+**On her iPhone**
+
+1. Open the link in **Safari** (it has to be Safari, not Chrome, for the next step).
+2. Tap **Share** (the square with the arrow at the bottom), scroll down, tap **Add to Home Screen**, tap **Add**.
+3. Open **Note Reader** from the home screen. It runs full-screen like a normal app, works offline,
+   and keeps her stats on the phone.
+
+Differences from the native app: no haptics (iPhone Safari doesn't support vibration), and sound
+starts after the first tap because browsers require a gesture to unlock audio. Everything else
+is the same: Czech note names, both clefs, both ranges, letters or piano, Practice / Sprint / Streak,
+repetition of missed notes, stats and dark mode.
 
 ---
 
